@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="chat.css">
+    <script src="chat.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <h2>Quick Text</h2>
+        <div id="connectPanel">
+            <p><input id="selfPhnNo" type="tel" placeholder="Your contact number.">
+                <button type="button" id="connectBtn" style="margin-left: 15px;" onclick="connect()">Connect</button>
+            </p>
+        </div>
+        <div id="chatPanel">
+            <div id="left-panel">
+                <p>
+                    <input id="frndPhnNo" type="tel">
+                    <button id="addBtn" type="button" onclick="add()">Add</button>
+                </p>
+                <div id="friendListDiv"></div>
+            </div>
+            <div id="right-panel">
+                <span id="connectedAs">98</span>
+                <div id="messagingPanel">
+                    <div id="messageContainer">
+                    </div>
+                    <div id="sendMessageDiv">
+                        Type: <input id="message" type="text">
+                        <button id="sendBtn" type="button" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
