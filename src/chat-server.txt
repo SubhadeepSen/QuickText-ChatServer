@@ -1,0 +1,47 @@
+Operation:
+	-connect:
+		1.	cached user contact no. with socket
+		2.	return list of friends
+		3.	return list of messages from message DB (Sorted by date-time)
+		4. 	sent not-delivered messages and update message DB (Sorted by date-time)
+		- input:
+			{operation, contact number}
+		- output: 
+			{friends[list of contact no.], messages[list of messages], notificationMessages[not delivered previously]}
+			
+		
+	-addFriend:
+		1. 	add new contact no. in friend list DB
+		2. 	return added contact no.
+		- input:
+			{operation, self contact number, friend's contact number}
+		- output: 
+			{friend's contact number}
+		
+		
+	-listMessages: 
+		1.	return list of messages from message DB (Sorted by date-time)
+		- input:
+			{operation, self contact number}
+		- output: 
+			{messages[list of messages]}
+			
+			
+	-listMessageByContactNo.:
+		1.	return list of messages from message DB by contact no. (Sorted by date-time)
+		- input:
+			{operation, self contact number, friend's contact number}
+		- output: 
+			{messages[list of messages]}
+			
+			
+	-send:	
+		1.	check in cache for receiver connection
+		2.	if connected, send to receiver and add to message DB
+		3.	if not connected, add it in not-delivered message DB
+		- input:
+			{operation, self contact number, friend's contact number, text message}
+		- output: 
+			{send status}
+			
+			
