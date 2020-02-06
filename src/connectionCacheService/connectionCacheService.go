@@ -28,3 +28,7 @@ func GetConnection(phoneNumber string) *websocket.Conn {
 	}
 	return connectionCache[phoneNumber]
 }
+
+func RemoveConnection(phoneNumber string) {
+	connectionCache[phoneNumber] = nil
+}

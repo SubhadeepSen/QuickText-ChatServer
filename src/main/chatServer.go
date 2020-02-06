@@ -73,7 +73,11 @@ func operationHandler(ws *websocket.Conn) {
 			websocket.Message.Send(ws, string(responsePayload))
 		case "send":
 			communicationService.SendMessage(payload.SenderPhoneNumber, payload.RecieverPhoneNumber, payload.Message)
+		case "close":
+			log.Println(payload.Operation)
+			connectionCacheService.RemoveConnection(payload.SenderPhoneNumber)
 		default:
+			log.Println(payload.Operation)
 			websocket.Message.Send(ws, "Unsupported operation...")
 		}
 	}

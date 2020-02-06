@@ -11,6 +11,16 @@ window.onload = function () {
     document.getElementById('chatPanel').style.display = "none";
 };
 
+window.onbeforeunload = function(){
+    console.log('unload');
+    var payload = {};
+    payload.operation = "close";
+    payload.senderPhoneNumber = selfPhnNo;
+    sock.send(JSON.stringify(payload));
+    sock.close();
+    return null;
+}
+
 function connect() {
     selfPhnNo = document.getElementById('selfPhnNo').value;
     sock = new WebSocket(wsuri);

@@ -9,7 +9,6 @@ import (
 var messageDatabase map[string][]model.Conversation
 
 func InitMessageDatabase() {
-	log.Println(messageDatabase)
 	if messageDatabase == nil {
 		messageDatabase = make(map[string][]model.Conversation)
 		log.Println("Initializing messageDatabase....")
