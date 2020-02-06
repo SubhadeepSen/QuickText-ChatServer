@@ -16,9 +16,11 @@ func InitMessageDatabase() {
 }
 
 func AddMessage(from string, to string, text string) {
+	timeFormat := "Mon, Jan 2, 2006 at 3:04:00.00000pm"
 	if messageDatabase != nil {
-		messageDatabase[from] = append(messageDatabase[from], model.Conversation{from, to, time.Now().String(), text})
-		messageDatabase[to] = append(messageDatabase[to], model.Conversation{from, to, time.Now().String(), text})
+		currTime := time.Now().Format(timeFormat)
+		messageDatabase[from] = append(messageDatabase[from], model.Conversation{to, from, currTime, text})
+		messageDatabase[to] = append(messageDatabase[to], model.Conversation{to, from, currTime, text})
 	}
 }
 
