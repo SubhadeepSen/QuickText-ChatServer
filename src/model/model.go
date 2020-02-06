@@ -2,12 +2,6 @@ package model
 
 import ()
 
-type Message struct {
-	FriendPhoneNumber string `json:"friendPhoneNumber"`
-	DateTime          string `json:"dateTime"`
-	Message           string `json:"message"`
-}
-
 type ResponsePayload struct {
 	Operation string `json:"operation"`
 	Data      string `json:"data"`
