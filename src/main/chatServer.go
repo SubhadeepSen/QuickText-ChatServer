@@ -70,7 +70,6 @@ func operationHandler(ws *websocket.Conn) {
 					return t1.Before(t2)
 				})
 			}
-			fmt.Println(messages)
 			response := ConnectionResponse{friendList, cachedMessages, messages}
 			responseData, _ := json.Marshal(response)
 			responsePayload, _ := json.Marshal(model.ResponsePayload{"connect", string(responseData)})
