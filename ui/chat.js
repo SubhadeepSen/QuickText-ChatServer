@@ -9,9 +9,33 @@ var frndToMsgMap = new Map();
 window.onload = function () {
     document.getElementById('messagingPanel').style.display = "none";
     document.getElementById('chatPanel').style.display = "none";
+    document.getElementById("selfPhnNo").addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            if (event.target.value) {
+                document.getElementById("connectBtn").click();
+            }
+        }
+    });
+    document.getElementById("frndPhnNo").addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            if (event.target.value) {
+                document.getElementById("addBtn").click();
+            }
+        }
+    });
+    document.getElementById("message").addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            if (event.target.value) {
+                document.getElementById("sendBtn").click();
+            }
+        }
+    });
 };
 
-window.onbeforeunload = function(){
+window.onbeforeunload = function () {
     console.log('unload');
     var payload = {};
     payload.operation = "close";
@@ -138,21 +162,22 @@ function populate(messages) {
             frndToMsgMap.set(msg.from, messageContentNode)
         }
 
-        if (msg.from == selfPhnNo){
+        if (msg.from == selfPhnNo) {
             frndToMsgMap.get(msg.to).appendChild(getTextNode(null, msg.text, msg.from));
-        }else if (msg.to == selfPhnNo){
+        } else if (msg.to == selfPhnNo) {
             frndToMsgMap.get(msg.from).appendChild(getTextNode(msg.from, msg.text, null));
-        }        
+        }
     });
 }
 
 function getTextNode(phnNo, textMessage, sender) {
     let pNode = document.createElement("p");
     let text = '';
-    if(null != sender){
+    if (null != sender) {
         text = sender + ' > ' + textMessage;
-    }else{
-        text = phnNo + ' > ' + textMessage;
+    } else {
+        text = textMessage + ' < ' + phnNo;
+        pNode.setAttribute('class', 'receive-text');
     }
     pNode.appendChild(document.createTextNode(text));
     return pNode;

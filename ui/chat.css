@@ -123,3 +123,7 @@ input#message {
     font-weight: bold;
     color: cornflowerblue;
 }
+
+.receive-text{
+	/*float: right;*/
+}
