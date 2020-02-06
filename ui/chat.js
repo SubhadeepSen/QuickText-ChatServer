@@ -127,19 +127,22 @@ function populate(messages) {
     }
     let messageContentNode = null;
     messages.forEach(msg => {
-        if (!frndToMsgMap.get(msg.to)) {
+        if (msg.to != selfPhnNo && !frndToMsgMap.get(msg.to)) {
             messageContentNode = document.createElement("div");
             messageContentNode.setAttribute('id', 'messageContent');
             frndToMsgMap.set(msg.to, messageContentNode)
         }
-        console.log(msg.from +' - '+ msg.text);
-        if(msg.from == selectedFriendPhnNo){
-            frndToMsgMap.get(msg.to).appendChild(getTextNode(msg.from, msg.text, null));
-            console.log('if');
-        }else{
-            frndToMsgMap.get(msg.to).appendChild(getTextNode(msg.to, msg.text, null));
-            console.log('else');
+        if (msg.from != selfPhnNo && !frndToMsgMap.get(msg.from)) {
+            messageContentNode = document.createElement("div");
+            messageContentNode.setAttribute('id', 'messageContent');
+            frndToMsgMap.set(msg.from, messageContentNode)
         }
+
+        if (msg.from == selfPhnNo){
+            frndToMsgMap.get(msg.to).appendChild(getTextNode(null, msg.text, msg.from));
+        }else if (msg.to == selfPhnNo){
+            frndToMsgMap.get(msg.from).appendChild(getTextNode(msg.from, msg.text, null));
+        }        
     });
 }
 
