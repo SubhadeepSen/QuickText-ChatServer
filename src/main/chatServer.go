@@ -13,6 +13,8 @@ import (
 	"golang.org/x/net/websocket"
 	"model"
 	"net/http"
+	"sort"
+	"time"
 )
 
 type Payload struct {
@@ -49,11 +51,27 @@ func operationHandler(ws *websocket.Conn) {
 
 		switch payload.Operation {
 		case "connect":
+			timeFormat := "Mon, Jan 2, 2006 at 3:04:00.00000pm"
 			connectionCacheService.AddConnectionToCache(payload.SenderPhoneNumber, ws)
 			friendList := friendListService.ListFriends(payload.SenderPhoneNumber)
-			cachedMessage := messageCacheService.ListMessages(payload.SenderPhoneNumber)
+			cachedMessages := messageCacheService.ListMessages(payload.SenderPhoneNumber)
+			if cachedMessages != nil {
+				sort.SliceStable(cachedMessages, func(i, j int) bool {
+					t1, _ := time.Parse(timeFormat, cachedMessages[i].DateTime)
+					t2, _ := time.Parse(timeFormat, cachedMessages[j].DateTime)
+					return t1.Before(t2)
+				})
+			}
 			messages := messageDatabaseService.ListConversations(payload.SenderPhoneNumber)
-			response := ConnectionResponse{friendList, cachedMessage, messages}
+			if messages != nil {
+				sort.SliceStable(messages, func(i, j int) bool {
+					t1, _ := time.Parse(timeFormat, messages[i].DateTime)
+					t2, _ := time.Parse(timeFormat, messages[j].DateTime)
+					return t1.Before(t2)
+				})
+			}
+			fmt.Println(messages)
+			response := ConnectionResponse{friendList, cachedMessages, messages}
 			responseData, _ := json.Marshal(response)
 			responsePayload, _ := json.Marshal(model.ResponsePayload{"connect", string(responseData)})
 			websocket.Message.Send(ws, string(responsePayload))
