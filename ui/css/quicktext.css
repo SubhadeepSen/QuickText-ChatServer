@@ -1,0 +1,185 @@
+.body-background {
+    background: rgb(201, 222, 150);
+    background: -moz-linear-gradient(45deg, rgba(201, 222, 150, 1) 0%, rgba(138, 182, 107, 1) 44%, rgba(57, 130, 53, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(201, 222, 150, 1) 0%, rgba(138, 182, 107, 1) 44%, rgba(57, 130, 53, 1) 100%);
+    background: linear-gradient(45deg, rgba(201, 222, 150, 1) 0%, rgba(138, 182, 107, 1) 44%, rgba(57, 130, 53, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c9de96', endColorstr='#398235', GradientType=1);
+}
+
+#connectForm {
+    width: 30%;
+    margin: auto;
+}
+
+.-margin-bottom-25px {
+    margin-bottom: 25px;
+}
+
+.-vertical-middle {
+    margin-top: 10% !important;
+}
+
+.-width-10-per {
+    width: 10% !important;
+}
+
+.btn-outline-success {
+    color: #03454c;
+    border-color: #03454c;
+}
+
+.btn-outline-success:hover {
+    background-color: #03454c !important;
+}
+
+#chatWindowDiv {
+    width: 100% !important;
+    height: 550px;
+    padding: 2%;
+}
+
+#addFriendDiv {
+    margin-bottom: -35px;
+}
+
+#addFriendForm {
+    margin-left: 15%;
+}
+
+.add-friend-icon {
+    font-size: 45px;
+    color: #3c8437;
+    margin-top: -8%;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.add-friend-icon:hover {
+    color: #26568c
+}
+
+#friendListDiv {
+    background-color: #013a45;
+    height: 550px;
+    overflow: auto;
+    margin-top: 20px;
+    border-radius: 10px 0 0 10px;
+}
+
+#friendList {
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 15px;
+}
+
+#friendList>p {
+    color: teal;
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: lightgray;
+    padding-left: 8%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+#friendList>p:hover {
+    background-color: darkgray;
+}
+
+.-selectedFriend {
+    color: lightgray !important;
+    background-color: teal !important;
+}
+
+.-notification {
+    font-size: 15px;
+    color: #013a45;
+    background-color: #ffffff;
+    padding-left: 4px;
+    padding-right: 4px;
+    float: right;
+    margin-right: 3%;
+    border-radius: 50%;
+}
+
+#connectedUser {
+    padding: 8px;
+    font-size: 20px;
+    color: #013a45;
+    font-weight: bold;
+}
+
+#messageAreaDiv {
+    background: #a7cfdf;
+    background: -moz-linear-gradient(-45deg, #a7cfdf 0%, #23538a 100%);
+    background: -webkit-linear-gradient(-45deg, #a7cfdf 0%, #23538a 100%);
+    background: linear-gradient(135deg, #a7cfdf 0%, #23538a 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', endColorstr='#23538a', GradientType=1);
+    height: 550px;
+    margin-top: 20px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+#messageAreaContainer {
+    width: 100%;
+    margin-top: 3%;
+    margin-left: 3%;
+    margin-right: 3%;
+    overflow: auto;
+    border: 2px solid #013a45;
+    border-radius: 4px;
+    padding: 3%;
+    height: 430px;
+    background: rgb(204, 204, 204);
+    background: -moz-linear-gradient(45deg, rgba(204, 204, 204, 1) 0%, rgba(238, 238, 238, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(204, 204, 204, 1) 0%, rgba(238, 238, 238, 1) 100%);
+    background: linear-gradient(45deg, rgba(204, 204, 204, 1) 0%, rgba(238, 238, 238, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#eeeeee', GradientType=1);
+}
+
+#messageList {
+    width: 100%;
+}
+
+#messageList>.sent {
+    float: right;
+    background-color: #008080;
+    color: white;
+    border-radius: 25px 0 25px 0;
+    padding-right: 2%;
+    padding-left: 2%;
+    width: 40%;
+}
+
+#messageList>.received {
+    background-color: white;
+    color: #008080;
+    border-radius: 25px 0 25px 0;
+    padding-right: 2%;
+    padding-left: 2%;
+    width: 40%;
+    clear: both;
+}
+
+#sendMessageDiv {
+    width: 100%;
+    margin-left: 3%;
+    margin-right: 3%;
+    border-radius: 4px;
+}
+
+#sendButton {
+    width: 100%;
+}
+
+input {
+    border-radius: 25px !important;
+}
+
+input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(1, 58, 69, .25) !important;
+}
