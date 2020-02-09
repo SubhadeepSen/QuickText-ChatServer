@@ -84,8 +84,8 @@ window.onbeforeunload = function() {
     var payload = {};
     payload.operation = "close";
     payload.senderPhoneNumber = userPhoneNumber;
-    sock.send(JSON.stringify(payload));
-    sock.close();
+    socket.send(JSON.stringify(payload));
+    socket.close();
     return null;
 }
 
@@ -135,6 +135,7 @@ function onResponseReceived(responseEvent) {
         case "received":
             data = JSON.parse(responsePayload.data);
             appendNewTextMessage(data.phoneNumber, data.message, null);
+            handleNotification(data.phoneNumber);
             break;
         case "error":
             data = JSON.parse(responsePayload.data);
@@ -214,4 +215,23 @@ function appendNewTextMessage(phoneNumber, textMessage, sender) {
     }
     messageList.appendChild(getTextNode(phoneNumber, textMessage, sender));
     document.getElementById('messageAreaContainer').appendChild(messageList);
+}
+
+function handleNotification(phoneNumber) {
+    if (selectedFriendPhoneNumber == phoneNumber) {
+        return;
+    }
+    let friendNode = document.getElementById(phoneNumber);
+    let spanNode = friendNode.firstElementChild;
+    if (!spanNode) {
+        spanNode = document.createElement('span');
+        spanNode.classList.add('-notification');
+        friendNode.appendChild(spanNode);
+    }
+    let value = spanNode.innerHTML;
+    if (value.length == 0) {
+        spanNode.innerHTML = 1;
+    } else {
+        spanNode.innerHTML = parseInt(value) + 1;
+    }
 }
