@@ -13,3 +13,8 @@ type Conversation struct {
 	DateTime string `json:"dateTime"`
 	Text     string `json:"text"`
 }
+
+type Friend struct {
+	PhoneNumber string `json:"phoneNumber"`
+	Name        string `json:"name"`
+}
