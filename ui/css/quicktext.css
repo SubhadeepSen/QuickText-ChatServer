@@ -39,7 +39,7 @@
 }
 
 #addFriendDiv {
-    margin-bottom: -35px;
+    margin-bottom: -18px;
 }
 
 #addFriendForm {
@@ -146,9 +146,9 @@
 }
 
 #messageList>.sent {
-    float: right;
-    background-color: #008080;
-    color: white;
+    /*float: right;*/
+    background-color: white;
+    color: #008080;
     border-radius: 25px 0 25px 0;
     padding-right: 2%;
     padding-left: 2%;
@@ -156,13 +156,13 @@
 }
 
 #messageList>.received {
-    background-color: white;
-    color: #008080;
+    background-color: #008080;
+    color: white;
     border-radius: 25px 0 25px 0;
     padding-right: 2%;
     padding-left: 2%;
     width: 40%;
-    clear: both;
+    /*clear: both;*/
 }
 
 #sendMessageDiv {

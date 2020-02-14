@@ -78,6 +78,34 @@ window.onload = function() {
         messageInput.value = '';
         appendNewTextMessage(payload.recieverPhoneNumber, payload.message, payload.senderPhoneNumber)
     }
+
+    document.getElementById('usernameInput').addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("connectButton").click();
+        }
+    })
+
+    document.getElementById('phoneNumberInput').addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("connectButton").click();
+        }
+    })
+
+    document.getElementById('addContactInput').addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("addContactButton").click();
+        }
+    })
+
+    document.getElementById('messageInput').addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("sendButton").click();
+        }
+    })
 }
 
 window.onbeforeunload = function() {
@@ -106,10 +134,10 @@ function initialize(e) {
     let payload = {};
     payload.operation = "connect";
     payload.senderPhoneNumber = userPhoneNumber;
+    payload.username = userName;
     socket.send(JSON.stringify(payload));
     document.getElementById('connectFormDiv').style.display = 'none';
     document.getElementById('chatWindowDiv').style.display = 'flex';
-    document.getElementById('connectedUser').innerHTML = userName;
 }
 
 function onResponseReceived(responseEvent) {
@@ -119,18 +147,20 @@ function onResponseReceived(responseEvent) {
     switch (responsePayload.operation) {
         case "connect":
             data = JSON.parse(responsePayload.data);
+            userName = data.username;
+            document.getElementById('connectedUser').innerHTML = userName + "[" + userPhoneNumber + "]";
             let friendList = data.friendList;
             let cachedMessages = data.cachedMessages;
             let messages = data.messages;
             if (friendList) {
-                friendList.forEach(frnd => {
-                    addFriendNode(frnd);
+                friendList.forEach(friend => {
+                    addFriendNode(friend);
                 });
             }
             populatePhoneNumberToMessageList(messages, cachedMessages);
             break;
         case "addFriend":
-            addFriendNode(responsePayload.data);
+            addFriendNode(JSON.parse(responsePayload.data));
             break;
         case "received":
             data = JSON.parse(responsePayload.data);
@@ -138,19 +168,22 @@ function onResponseReceived(responseEvent) {
             handleNotification(data.phoneNumber);
             break;
         case "error":
-            data = JSON.parse(responsePayload.data);
-            alert(data);
+            alert(responsePayload.data);
             break;
         default:
             break;
     }
 }
 
-function addFriendNode(phoneNumber) {
+function addFriendNode(friend) {
     let friendList = document.getElementById('friendList');
     let pNode = document.createElement("p");
-    pNode.setAttribute('id', phoneNumber);
-    pNode.appendChild(document.createTextNode(phoneNumber));
+    pNode.setAttribute('id', friend.phoneNumber);
+    if (friend.name) {
+        pNode.appendChild(document.createTextNode(friend.name));
+    } else {
+        pNode.appendChild(document.createTextNode(friend.phoneNumber));
+    }
     friendList.appendChild(pNode);
 }
 
@@ -189,10 +222,10 @@ function getTextNode(phoneNumber, textMessage, sender) {
     let text = '';
     if (null != sender) {
         pNode.setAttribute('id', sender);
-        text = sender + ' > ' + textMessage;
+        text = textMessage;
         pNode.setAttribute('class', 'sent');
     } else {
-        text = textMessage + ' < ' + phoneNumber;
+        text = textMessage;
         pNode.setAttribute('class', 'received');
         pNode.setAttribute('id', phoneNumber);
     }
