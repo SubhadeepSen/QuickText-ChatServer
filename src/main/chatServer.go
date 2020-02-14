@@ -9,6 +9,7 @@ import (
 	"log"
 	"messageCacheService"
 	"messageDatabaseService"
+	"userDatabaseService"
 
 	"golang.org/x/net/websocket"
 	"model"
@@ -22,10 +23,12 @@ type Payload struct {
 	SenderPhoneNumber   string `json:"senderPhoneNumber"`
 	RecieverPhoneNumber string `json:"recieverPhoneNumber"`
 	Message             string `json:"message"`
+	Username            string `json:"username"`
 }
 
 type ConnectionResponse struct {
-	FriendList     []string             `json:"friendList"`
+	Username       string               `json:"username"`
+	FriendList     []model.User         `json:"friendList"`
 	CachedMessages []model.Conversation `json:"cachedMessages"`
 	Messages       []model.Conversation `json:"messages"`
 }
@@ -52,6 +55,7 @@ func operationHandler(ws *websocket.Conn) {
 		switch payload.Operation {
 		case "connect":
 			timeFormat := "Mon, Jan 2, 2006 at 3:04:00.00000pm"
+			username := userDatabaseService.AddNewUser(payload.Username, payload.SenderPhoneNumber)
 			connectionCacheService.AddConnectionToCache(payload.SenderPhoneNumber, ws)
 			friendList := friendListService.ListFriends(payload.SenderPhoneNumber)
 			cachedMessages := messageCacheService.ListMessages(payload.SenderPhoneNumber)
@@ -70,13 +74,19 @@ func operationHandler(ws *websocket.Conn) {
 					return t1.Before(t2)
 				})
 			}
-			response := ConnectionResponse{friendList, cachedMessages, messages}
+			response := ConnectionResponse{username, friendList, cachedMessages, messages}
 			responseData, _ := json.Marshal(response)
 			responsePayload, _ := json.Marshal(model.ResponsePayload{"connect", string(responseData)})
 			websocket.Message.Send(ws, string(responsePayload))
 		case "addFriend":
+			if payload.SenderPhoneNumber == payload.RecieverPhoneNumber {
+				responsePayload, _ := json.Marshal(model.ResponsePayload{"error", "Self cannot be added as friend!"})
+				websocket.Message.Send(ws, string(responsePayload))
+				break
+			}
 			response := friendListService.AddFriend(payload.SenderPhoneNumber, payload.RecieverPhoneNumber)
-			responsePayload, _ := json.Marshal(model.ResponsePayload{"addFriend", response})
+			responseData, _ := json.Marshal(response)
+			responsePayload, _ := json.Marshal(model.ResponsePayload{"addFriend", string(responseData)})
 			websocket.Message.Send(ws, string(responsePayload))
 		case "listMessages":
 			response := messageDatabaseService.ListConversations(payload.SenderPhoneNumber)
@@ -91,16 +101,17 @@ func operationHandler(ws *websocket.Conn) {
 		case "send":
 			communicationService.SendMessage(payload.SenderPhoneNumber, payload.RecieverPhoneNumber, payload.Message)
 		case "close":
-			log.Println(payload.Operation)
 			connectionCacheService.RemoveConnection(payload.SenderPhoneNumber)
 		default:
 			log.Println(payload.Operation)
-			websocket.Message.Send(ws, "Unsupported operation...")
+			responsePayload, _ := json.Marshal(model.ResponsePayload{"error", "Unsupported operation!"})
+			websocket.Message.Send(ws, string(responsePayload))
 		}
 	}
 }
 
 func main() {
+	userDatabaseService.InitUsers()
 	connectionCacheService.InitCache()
 	friendListService.InitFriendList()
 	messageCacheService.InitMessageCache()

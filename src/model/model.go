@@ -14,7 +14,7 @@ type Conversation struct {
 	Text     string `json:"text"`
 }
 
-type Friend struct {
-	PhoneNumber string `json:"phoneNumber"`
+type User struct {
 	Name        string `json:"name"`
+	PhoneNumber string `json:"phoneNumber"`
 }
