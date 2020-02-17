@@ -1,6 +1,6 @@
-# QuickText-ChatServer [Instant Messaging Server]
+# QuickText ChatServer [Instant Messaging Server]
 
-### An instant messaging application the following features. The backend of this project is written in Go Language and the front end is written in HTML, CSS and Javascript.
+### An instant messaging application with the following features. The backend of this project is written in `Go Language` and the front end is written in HTML, CSS and Javascript.
 
 ## Features:
 - Instant Messaging
