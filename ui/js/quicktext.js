@@ -58,8 +58,8 @@ window.onload = function() {
         }
         var payload = {};
         payload.operation = "addFriend";
-        payload.senderPhoneNumber = userPhoneNumber;
-        payload.recieverPhoneNumber = newContact;
+        payload.from = userPhoneNumber;
+        payload.to = newContact;
         socket.send(JSON.stringify(payload));
         addContactInput.value = '';
     }
@@ -71,12 +71,12 @@ window.onload = function() {
         }
         var payload = {};
         payload.operation = "send";
-        payload.senderPhoneNumber = userPhoneNumber;
-        payload.recieverPhoneNumber = selectedFriendPhoneNumber;
+        payload.from = userPhoneNumber;
+        payload.to = selectedFriendPhoneNumber;
         payload.message = messageInput.value;
         socket.send(JSON.stringify(payload));
         messageInput.value = '';
-        appendNewTextMessage(payload.recieverPhoneNumber, payload.message, payload.senderPhoneNumber)
+        appendNewTextMessage(payload.to, payload.message, payload.from)
     }
 
     document.getElementById('usernameInput').addEventListener("keyup", function(event) {
@@ -111,7 +111,7 @@ window.onload = function() {
 window.onbeforeunload = function() {
     var payload = {};
     payload.operation = "close";
-    payload.senderPhoneNumber = userPhoneNumber;
+    payload.from = userPhoneNumber;
     socket.send(JSON.stringify(payload));
     socket.close();
     return null;
@@ -133,7 +133,7 @@ function isValidConnetInputs() {
 function initialize(e) {
     let payload = {};
     payload.operation = "connect";
-    payload.senderPhoneNumber = userPhoneNumber;
+    payload.from = userPhoneNumber;
     payload.username = userName;
     socket.send(JSON.stringify(payload));
     document.getElementById('connectFormDiv').style.display = 'none';

@@ -18,3 +18,18 @@ type User struct {
 	Name        string `json:"name"`
 	PhoneNumber string `json:"phoneNumber"`
 }
+
+type Payload struct {
+	Operation string `json:"operation"`
+	From      string `json:"from"`
+	To        string `json:"to"`
+	Message   string `json:"message"`
+	Username  string `json:"username"`
+}
+
+type ConnectionResponse struct {
+	Username       string         `json:"username"`
+	FriendList     []User         `json:"friendList"`
+	CachedMessages []Conversation `json:"cachedMessages"`
+	Messages       []Conversation `json:"messages"`
+}
