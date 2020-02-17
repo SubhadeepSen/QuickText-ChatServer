@@ -66,7 +66,8 @@ window.onload = function() {
 
     document.getElementById('sendButton').onclick = function(event) {
         let messageInput = document.getElementById('messageInput');
-        if (messageInput.value.length == 0) {
+        if (socket.readyState === 3 || messageInput.value.length == 0) {
+            alert("Opppssss! server is down...");
             return;
         }
         var payload = {};
